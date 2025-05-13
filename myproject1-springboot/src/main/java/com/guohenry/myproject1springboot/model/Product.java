@@ -16,6 +16,14 @@ public class Product {
     private Date createdDate;
     private Date lastModifiedDate;
 
+    public ProductCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(ProductCategory category) {
+        this.category = category;
+    }
+
     public Integer getProductId() {
         return productId;
     }
@@ -32,13 +40,7 @@ public class Product {
         this.productName = productName;
     }
 
-    public ProductCategory getCategory() {
-        return category;
-    }
 
-    public void setCategory(ProductCategory category) {
-        this.category = category;
-    }
 
     public String getImageUrl() {
         return imageUrl;
