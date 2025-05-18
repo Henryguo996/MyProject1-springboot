@@ -10,7 +10,7 @@ public class OrderRowMapper implements RowMapper<Order> {
 
 
     @Override
-    public Order mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+    public Order mapRow(ResultSet resultSet, int i) throws SQLException {
         Order order = new Order();
         order.setOrderId(resultSet.getInt("order_id"));
         order.setUserId(resultSet.getInt("user_id"));

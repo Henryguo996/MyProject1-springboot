@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class OrderItemRowMapper implements RowMapper<OrderItem> {
     @Override
-    public OrderItem mapRow(ResultSet resultSet, int rowNum) throws SQLException {
+    public OrderItem mapRow(ResultSet resultSet, int i) throws SQLException {
         OrderItem orderItem = new OrderItem();
         orderItem.setOrderItemId(resultSet.getInt("order_item_id"));
         orderItem.setOrderId(resultSet.getInt("order_id"));

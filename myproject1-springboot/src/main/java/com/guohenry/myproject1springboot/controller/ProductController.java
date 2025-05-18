@@ -22,6 +22,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @CrossOrigin(origins = "http://127.0.0.1:3000")
     //所有商品列表，條件查詢
     @GetMapping("/products")
     public ResponseEntity<Page<Product>> getProducts(
@@ -34,7 +35,7 @@ public class ProductController {
             @RequestParam(defaultValue = "desc") String sort, //升(asc)或降(desc)序
 
             //分頁 Pagination
-            @RequestParam(defaultValue = "5") @Max(1000) @Min(0) Integer limit, //取得幾筆數據->SQL LIMIT
+            @RequestParam(defaultValue = "20") @Max(1000) @Min(0) Integer limit, //取得幾筆數據->SQL LIMIT
             @RequestParam(defaultValue = "0") @Min(0) Integer offset //跳過多少數據->SQL OFFSET
     ) {
         //設置參數
@@ -62,7 +63,7 @@ public class ProductController {
 
         return ResponseEntity.status(HttpStatus.OK).body(page);
     }
-
+    @CrossOrigin(origins = "http://127.0.0.1:3000") // 假設你的前端是這個 port
     @GetMapping("/products/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable Integer productId){
 
@@ -75,6 +76,7 @@ public class ProductController {
         }
     }
 
+    @CrossOrigin(origins = "http://127.0.0.1:3000")
     @PostMapping("/products")
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequest productRequest){
 
