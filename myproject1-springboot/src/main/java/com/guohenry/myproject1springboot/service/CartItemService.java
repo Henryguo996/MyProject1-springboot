@@ -13,6 +13,4 @@ public interface CartItemService {
     CartItem updateCart(Integer userId, Long productId, Integer num, String deliveryId);
 
     void deleteCartItem(Integer userId, Long productId);
-
-
 }

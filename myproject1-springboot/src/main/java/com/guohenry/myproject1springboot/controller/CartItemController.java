@@ -11,28 +11,24 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@CrossOrigin(origins = "*")               // 開發階段先全部放行，正式環境請鎖定網域
+@CrossOrigin(origins = "*")                  // dev 階段先全部放行
 @RequestMapping("/users/{userId}/cart-items")
 public class CartItemController {
 
     @Autowired
     private CartItemService cartItemService;
 
-    /** 取得使用者整個購物車 */
+    /* 取得整個購物車 */
     @GetMapping
     public ResponseEntity<List<CartItem>> getCartItem(@PathVariable Integer userId) {
-
-        List<CartItem> cartItemList = cartItemService.getCartItem(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(cartItemList);
+        List<CartItem> list = cartItemService.getCartItem(userId);
+        return ResponseEntity.ok(list);
     }
 
-    /** 新增一筆項目
-     *  body 範例：{"productId":12,"num":1}
-     */
+    /* 新增項目 */
     @PostMapping
-    public ResponseEntity<CartItem> addToCart(
-            @PathVariable Integer userId,
-            @RequestBody Map<String, Object> body) {
+    public ResponseEntity<CartItem> addToCart(@PathVariable Integer userId,
+                                              @RequestBody Map<String, Object> body) {
 
         Long    productId = Long.valueOf(body.get("productId").toString());
         Integer num       = Integer.valueOf(body.get("num").toString());
@@ -41,14 +37,11 @@ public class CartItemController {
         return ResponseEntity.status(HttpStatus.CREATED).body(item);
     }
 
-    /** 修改數量或運送方式
-     *  body 可含 {"num":3}、{"deliveryId":"2"} 或兩者都有
-     */
+    /* 修改數量 / 運送方式 */
     @PutMapping("/{productId}")
-    public ResponseEntity<CartItem> updateCart(
-            @PathVariable Integer userId,
-            @PathVariable Long    productId,
-            @RequestBody Map<String, Object> body) {
+    public ResponseEntity<CartItem> updateCart(@PathVariable Integer userId,
+                                               @PathVariable Long productId,
+                                               @RequestBody Map<String, Object> body) {
 
         Integer num = body.containsKey("num")
                 ? Integer.valueOf(body.get("num").toString()) : null;
@@ -57,16 +50,15 @@ public class CartItemController {
                 ? body.get("deliveryId").toString() : null;
 
         CartItem item = cartItemService.updateCart(userId, productId, num, deliveryId);
-        return ResponseEntity.status(HttpStatus.OK).body(item);
+        return ResponseEntity.ok(item);
     }
 
-    /** 從購物車刪除一項 */
+    /* 刪除單筆 */
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteItem(
-            @PathVariable Integer userId,
-            @PathVariable Long    productId) {
+    public ResponseEntity<Void> deleteItem(@PathVariable Integer userId,
+                                           @PathVariable Long productId) {
 
         cartItemService.deleteCartItem(userId, productId);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();  // 204
+        return ResponseEntity.noContent().build();
     }
 }

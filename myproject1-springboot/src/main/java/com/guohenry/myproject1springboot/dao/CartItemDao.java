@@ -7,13 +7,15 @@ import java.util.Optional;
 
 public interface CartItemDao {
 
+    /* 依 userId 取得整個購物車 */
+    List<CartItem> findByUserId(Integer userId);
 
-    List<CartItem> findAll();
+    /* 依 userId + productId 取得一筆 */
+    Optional<CartItem> findByUserIdAndProductId(Integer userId, Long productId);
 
-    Optional<CartItem> findByProductId(Long productId);
-
+    /* 新增或修改 */
     CartItem save(CartItem item);
 
-    void deleteByProductId(Long productId);
-
+    /* 依 userId + productId 刪除 */
+    void deleteByUserIdAndProductId(Integer userId, Long productId);
 }
